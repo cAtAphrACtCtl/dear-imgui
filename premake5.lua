@@ -1,6 +1,8 @@
-project "imGui"
+project "ImGui"
 	kind "StaticLib"
 	language "C"
+    cppdialect "C++17"
+    staticruntime "on"
 
 	targetdir ("../../../bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("../../../bin-int/" .. outputdir .. "/%{prj.name}")
@@ -25,15 +27,14 @@ project "imGui"
 	{
 		"include"
 	}
-    
+
     filter "system:windows"
         systemversion "latest"
-        staticruntime "On"
-        defines
-		{
-			"GLFW_INCLUDE_NONE",
-			"IMGUI_IMPL_OPENGL_LOADER_CUSTOM",
-            "IMGUI_API=__declspec(dllexport)",
-		}
         
-    filter { "system:windows", "configurations:Release" }
+    filter "configurations:Debug"
+    runtime "Debug"
+    symbols "on"
+
+    filter "configurations:Release"
+    runtime "Release"
+    optimize "on"
